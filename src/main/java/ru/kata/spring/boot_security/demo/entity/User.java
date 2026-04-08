@@ -69,17 +69,6 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
-//    @PrePersist
-//    protected void onCreate() {
-//        createdAt = LocalDateTime.now();
-//        updatedAt = LocalDateTime.now();
-//    }
-//
-//    @PreUpdate
-//    protected void onUpdate() {
-//        updatedAt = LocalDateTime.now();
-//    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt.truncatedTo(ChronoUnit.SECONDS);
     }
