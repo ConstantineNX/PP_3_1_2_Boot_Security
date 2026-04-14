@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +33,9 @@ public class Autocontroller {
     @PostMapping("/register")
     public String register(@ModelAttribute User user, Model model) {
        try {
+           String rawPassword = user.getPassword();
            User user1 = adminUserService.registerUser(user);
-           UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user1.getEmail(), user1.getPassword());
+           UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user1.getEmail(), rawPassword);
            Authentication authResult = authenticationManager.authenticate(auth);
            SecurityContextHolder.getContext().setAuthentication(authResult);
            if (user1.getRoles().stream().anyMatch(r -> r.getName().equals("ROLE_ADMIN"))) {
